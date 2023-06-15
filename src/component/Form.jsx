@@ -1,11 +1,12 @@
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { AddUser } from "../redux/action/action";
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { AddUser,DeleteUser } from "../redux/action/action";
+import { Link } from "react-router-dom";
 
 const Form  = () => {
 
     const dispatch = useDispatch();
-
+    const allData = useSelector(state => state.crudUser.userList);
     const [input,setInput] = useState({
         name : '',
         email : '',
@@ -23,8 +24,26 @@ const Form  = () => {
     }
 
     const save = () => {
-       dispatch(AddUser(input))
+        let obj = {
+            id : Math.floor(Math.random() * 10000),
+            name : input.name,
+            email : input.email,
+            password : input.password
+        }
+       dispatch(AddUser(obj))
+       setInput({
+            name : '',
+            email : '',
+            password : ''
+       })
     }
+
+    const deleteData = (id) => {
+            dispatch(DeleteUser(id))
+    }
+
+    
+    
 
     return (
        <center>
@@ -33,15 +52,15 @@ const Form  = () => {
                 <tbody>
                     <tr>
                         <td>Name :- </td>
-                        <td><input type="text" name="name" onChange={ (e) => handleChange(e) }/></td>
+                        <td><input type="text" value={input.name} name="name" onChange={ (e) => handleChange(e) }/></td>
                     </tr>
                     <tr>
                         <td>Email :- </td>
-                        <td><input type="text" name="email" onChange={ (e) => handleChange(e) }/></td>
+                        <td><input type="text" value={input.email} name="email" onChange={ (e) => handleChange(e) }/></td>
                     </tr>
                     <tr>
                         <td>Password :- </td>
-                        <td><input type="text" name="password" onChange={ (e) => handleChange(e) }/></td>
+                        <td><input type="text" value={input.password} name="password" onChange={ (e) => handleChange(e) }/></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -51,7 +70,38 @@ const Form  = () => {
             </table><br></br>
 
             <table border={1}>
-                
+                <tbody>
+                    <tr>
+                        <td>Id</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Password</td>
+                        <td>Action</td>
+
+                    </tr>
+
+
+                    {
+                        allData.map((val)=>{
+                            return (
+                                <tr key={val.id}>
+                                    <td>{val.id}</td>
+                                    <td>{val.name}</td>
+                                    <td>{val.email}</td>
+                                    <td>{val.password}</td>
+                                    <td>
+                                        <button onClick={ () => deleteData(val.id) }>Delete</button> || 
+                                        <Link to={`/edit/${val.id}`}><button>Edit</button></Link>
+                                        
+
+                                    </td>
+
+                                </tr>
+                            )
+                        })
+                    }
+
+                </tbody>
             </table>
 
        </center>
