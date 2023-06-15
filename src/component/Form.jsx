@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AddUser,DeleteUser } from "../redux/action/action";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Form  = () => {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const allData = useSelector(state => state.crudUser.userList);
     const [input,setInput] = useState({
@@ -22,7 +22,6 @@ const Form  = () => {
         })
 
     }
-
     const save = () => {
         let obj = {
             id : Math.floor(Math.random() * 10000),
@@ -42,9 +41,13 @@ const Form  = () => {
             dispatch(DeleteUser(id))
     }
 
+    useEffect(()=>{
+        let chekUserLogin = localStorage.getItem('checkUserLogin');
+        if(!chekUserLogin){
+            navigate('/');
+        }
+    },[])
     
-    
-
     return (
        <center>
             <h1>User Register</h1>

@@ -1,16 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { FetchUser,UpdateUser } from "../redux/action/action";
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { UserLogin } from "../redux/action/action";
+import { useNavigate } from "react-router-dom";
 
-const Edit = () => {
+const Login = () => {
     const navigate = useNavigate();
-    const {id} = useParams();
     const dispatch = useDispatch();
-    const singleUser = useSelector(state => state.crudUser.singleUser); 
+    const checkUser = useSelector(state => state.crudUser.status);
+   
+    
+
     const [input,setInput] = useState({
-        id : '',
-        name : '',
         email : '',
         password : ''
     })
@@ -24,24 +24,21 @@ const Edit = () => {
     }
 
     const save = () => {
-        dispatch(UpdateUser(input));
-        navigate('/form');
+        dispatch(UserLogin(input))
     }
-    
+
     useEffect(()=>{
-        dispatch(FetchUser(id));
-        setInput(singleUser)
-    },[singleUser])
+        let chekUserLogin = localStorage.getItem('checkUserLogin');
+        if(chekUserLogin){
+            navigate('/form');
+        }
+    },[checkUser])
 
     return (
         <center>
             <h1>User Register</h1>
             <table border={1}>
                 <tbody>
-                    <tr>
-                        <td>Name :- </td>
-                        <td><input type="text" value={input.name} name="name" onChange={ (e) => handleChange(e) }/></td>
-                    </tr>
                     <tr>
                         <td>Email :- </td>
                         <td><input type="text" value={input.email} name="email" onChange={ (e) => handleChange(e) }/></td>
@@ -60,4 +57,4 @@ const Edit = () => {
     )
 }
 
-export default Edit
+export default Login;

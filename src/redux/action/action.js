@@ -25,3 +25,10 @@ export const UpdateUser = (data) => {
         payload : data
     }
 }
+
+export const UserLogin = (data) => {
+    return {
+        type : 'LOGIN_USER',
+        payload : data
+    }
+}

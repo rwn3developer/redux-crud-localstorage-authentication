@@ -1,6 +1,7 @@
 let initialState = {
     userList : localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : [],
-    singleUser : {}
+    singleUser : {},
+    status : 0
 }
 
 const crudReducer = (state = initialState,action) => {
@@ -51,6 +52,24 @@ const crudReducer = (state = initialState,action) => {
             return {
                 ...state,
                 userList : updateUser
+            }
+        break;
+
+        case 'LOGIN_USER' : 
+            let chekUser = state.userList.filter((v)=>{
+                return v.email == action.payload.email && v.password == action.payload.password;
+            })
+            if(chekUser.length != 0){
+                localStorage.setItem('checkUserLogin',JSON.stringify(chekUser[0]));
+                return {
+                    ...state,
+                    status : 1
+                }
+            }else{
+                return {
+                    ...state,
+                    status : 0
+                }
             }
         break;
             
