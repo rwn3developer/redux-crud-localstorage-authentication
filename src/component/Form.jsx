@@ -43,11 +43,12 @@ const Form  = () => {
 
     useEffect(()=>{
         let chekUserLogin = localStorage.getItem('checkUserLogin');
-        if(!chekUserLogin){
-            navigate('/');
-        }
-    },[])
-    
+            if(chekUserLogin){
+                navigate('/dashboard');
+            }
+    },[]);
+
+
     return (
        <center>
             <h1>User Register</h1>
@@ -71,7 +72,7 @@ const Form  = () => {
                     </tr>
                 </tbody>
             </table><br></br>
-
+            <Link to={`/login`}><button>Login</button></Link>
             <table border={1}>
                 <tbody>
                     <tr>

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { UserLogin } from "../redux/action/action";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+
+
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const checkUser = useSelector(state => state.crudUser.status);
-   
-    
+  
 
     const [input,setInput] = useState({
         email : '',
@@ -25,14 +26,24 @@ const Login = () => {
 
     const save = () => {
         dispatch(UserLogin(input))
+        setInput({
+            email :'',
+            password : ''
+        })
     }
 
+   
     useEffect(()=>{
         let chekUserLogin = localStorage.getItem('checkUserLogin');
-        if(chekUserLogin){
-            navigate('/form');
+        if(checkUser == 10){
+            alert("Email and Password not vaid") 
+        }else{
+            if(chekUserLogin){
+                navigate('/dashboard');
+            }
         }
     },[checkUser])
+
 
     return (
         <center>
@@ -52,7 +63,10 @@ const Login = () => {
                         <td><input type="button" onClick={ () => save() } value="submit"/></td>
                     </tr>
                 </tbody>
+                
             </table><br></br>
+
+            <Link to={`/`}><button>Register</button></Link>
         </center>
     )
 }

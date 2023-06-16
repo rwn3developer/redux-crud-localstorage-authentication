@@ -63,12 +63,12 @@ const crudReducer = (state = initialState,action) => {
                 localStorage.setItem('checkUserLogin',JSON.stringify(chekUser[0]));
                 return {
                     ...state,
-                    status : 1
+                    status : state.status = 1
                 }
             }else{
                 return {
                     ...state,
-                    status : 0
+                    status : state.status = 10
                 }
             }
         break;

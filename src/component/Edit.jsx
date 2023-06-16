@@ -25,7 +25,7 @@ const Edit = () => {
 
     const save = () => {
         dispatch(UpdateUser(input));
-        navigate('/form');
+        navigate('/');
     }
     
     useEffect(()=>{
