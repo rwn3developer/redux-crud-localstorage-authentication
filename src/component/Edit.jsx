@@ -28,10 +28,16 @@ const Edit = () => {
         navigate('/');
     }
     
+    // useEffect(()=>{
+    //     dispatch(FetchUser(id));  
+    // },[id])
+
     useEffect(()=>{
-        dispatch(FetchUser(id));
-        setInput(singleUser)
-    },[singleUser])
+        dispatch(FetchUser(id));  
+        if(singleUser){
+            setInput(singleUser)
+        }
+    },[singleUser,id])
 
     return (
         <center>
