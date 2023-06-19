@@ -24,7 +24,7 @@ const Edit = () => {
     }
 
     const save = () => {
-        dispatch(UpdateUser(input));
+        dispatch(UpdateUser(input)); 
         navigate('/');
     }
     
