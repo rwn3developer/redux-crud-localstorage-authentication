@@ -11,7 +11,7 @@ const Login = () => {
     const checkUser = useSelector(state => state.crudUser.status);
   
 
-    const [input,setInput] = useState({
+    const [input,setInput] = useState({ 
         email : '',
         password : ''
     })
